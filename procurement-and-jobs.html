@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Procurement & Jobs — How It All Works</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FAFAF9; --panel: #FFFFFF; --panel-2: #F6F6F4;
+  --ink: #171A21; --ink-soft: #3D4250; --muted: #767C8C; --line: #B9BEC9;
+  --border: #E7E7E3;
+  --accent: #1E8A6E; --accent-soft: #E4F4EE;
+  --accent2: #2E6FD9; --accent2-soft: #E7EEFC;
+  --danger: #C24545; --danger-soft: #FBEAEA;
+  --warn: #B4791A; --warn-soft: #FBF0DE;
+  --purple: #7A4FD1; --purple-soft: #EFE8FB;
+  --shadow: rgba(20,20,20,0.05);
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 0px; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: 'Inter', -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+h1, h2, h3, h4 { font-family: 'Inter', sans-serif; margin: 0; color: var(--ink); }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+.hero { padding: 64px 0 36px; }
+.eyebrow { font-size: 13px; font-weight: 600; color: var(--accent); letter-spacing: 0.02em; margin-bottom: 12px; }
+h1 { font-size: clamp(32px, 5vw, 48px); font-weight: 700; line-height: 1.12; max-width: 18ch; letter-spacing: -0.02em; }
+.hero p.lede { font-size: 17px; line-height: 1.65; color: var(--muted); max-width: 62ch; margin-top: 16px; font-weight: 400; }
+
+.part-divider {
+  display: flex; align-items: center; gap: 16px; padding: 48px 0 8px;
+}
+.part-divider .part-tag {
+  font-size: 13px; font-weight: 700; color: #fff; background: var(--ink);
+  padding: 6px 14px; border-radius: 20px; white-space: nowrap;
+}
+.part-divider h1 { font-size: clamp(26px, 4vw, 36px); }
+.part-lede { color: var(--muted); font-size: 15.5px; max-width: 62ch; line-height: 1.6; padding-bottom: 8px; }
+
+nav.toc {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 0;
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  position: sticky; top: 0px; background: var(--bg); z-index: 10;
+}
+nav.toc a {
+  font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none;
+  padding: 6px 12px; border-radius: 8px; transition: background .15s ease, color .15s ease;
+}
+nav.toc a.group-label { color: var(--ink); font-weight: 700; padding-right: 2px; }
+nav.toc a:hover { background: var(--panel-2); color: var(--ink); }
+nav.toc .sep { width: 1px; background: var(--border); margin: 4px 2px; }
+
+section.module { padding: 44px 0; border-bottom: 1px solid var(--border); scroll-margin-top: 56px; }
+.module-head { margin-bottom: 8px; }
+.module-num { font-size: 13px; color: var(--accent); font-weight: 600; }
+.module-head h2 { font-size: 23px; font-weight: 700; letter-spacing: -0.01em; margin-top: 4px; }
+.module-desc { color: var(--muted); font-size: 15px; max-width: 66ch; line-height: 1.65; margin-bottom: 26px; }
+
+.diagram-card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 14px;
+  padding: 22px 18px; box-shadow: 0 1px 3px var(--shadow); overflow-x: auto; margin-bottom: 20px;
+}
+.fc-svg { display: block; min-width: 540px; width: 100%; height: auto; }
+.fc-node, .fc-node-terminal { fill: var(--panel); stroke: var(--line); stroke-width: 1.4; }
+.fc-node-accent { fill: var(--accent2-soft); stroke: var(--accent2); stroke-width: 1.4; }
+.fc-node-success { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.4; }
+.fc-node-danger { fill: var(--danger-soft); stroke: var(--danger); stroke-width: 1.4; }
+.fc-node-warning { fill: var(--warn-soft); stroke: var(--warn); stroke-width: 1.4; }
+.fc-node-decision { fill: var(--panel); stroke: var(--accent2); stroke-width: 1.6; }
+.fc-node-data { fill: var(--panel-2); stroke: var(--line); stroke-width: 1.4; }
+.fc-label { font-family: 'Inter', sans-serif; font-size: 12.5px; fill: var(--ink-soft); font-weight: 600; }
+.fc-label-sm { font-family: 'Inter', sans-serif; font-size: 11px; fill: var(--ink-soft); font-weight: 600; }
+.fc-sublabel { font-family: 'Inter', sans-serif; font-size: 10px; fill: var(--muted); font-weight: 400; }
+.fc-arrow { stroke: var(--line); stroke-width: 1.4; fill: none; }
+.fc-arrowhead { fill: var(--line); }
+.fc-arrow-label { font-family: 'Inter', sans-serif; font-size: 10.5px; fill: var(--muted); font-weight: 500; }
+.fc-note { font-family: 'Inter', sans-serif; font-size: 10.5px; fill: var(--muted); }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 760px) { .grid-2 { grid-template-columns: 1fr; } }
+.field-card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; }
+.field-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+.field-card ul { margin: 0; padding: 0; list-style: none; }
+.field-card li { font-size: 13px; color: var(--ink-soft); padding: 6px 0; line-height: 1.55; }
+.status-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.chip { font-size: 12px; padding: 6px 13px; border-radius: 20px; background: var(--panel-2); border: 1px solid var(--border); color: var(--ink-soft); }
+table.compare { width: 100%; border-collapse: collapse; font-size: 12.5px; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+table.compare th, table.compare td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+table.compare th { font-weight: 700; color: var(--ink); background: var(--panel-2); }
+table.compare td { color: var(--ink-soft); }
+table.compare tr:last-child td { border-bottom: none; }
+.report-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+@media (max-width: 760px) { .report-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 500px) { .report-grid { grid-template-columns: 1fr; } }
+.report-card { border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; background: var(--panel); font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; }
+.report-card .rlabel { display: block; font-weight: 700; color: var(--accent); font-size: 11px; margin-bottom: 5px; }
+
+.role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 860px) { .role-grid { grid-template-columns: 1fr; } }
+.role-card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 22px 22px 24px; }
+.role-head { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+.role-num { font-size: 20px; font-weight: 800; color: var(--accent); line-height: 1.2; }
+.role-head h3 { font-size: 16px; font-weight: 700; margin-bottom: 3px; }
+.role-tagline { font-size: 12.5px; color: var(--muted); margin: 0; }
+.stepper { display: flex; flex-direction: column; }
+.step { display: grid; grid-template-columns: 26px 1fr; column-gap: 14px; position: relative; }
+.step:not(:last-child) { padding-bottom: 18px; }
+.step-num {
+  width: 26px; height: 26px; border-radius: 50%; background: var(--accent-soft); color: var(--accent);
+  display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;
+  position: relative; flex-shrink: 0;
+}
+.step:not(:last-child) .step-num::after {
+  content: ""; position: absolute; top: 26px; left: 50%; transform: translateX(-50%);
+  width: 2px; height: calc(100% + 4px); background: var(--border);
+}
+.step-body h4 { margin: 2px 0 4px; font-size: 13.5px; font-weight: 600; color: var(--ink); }
+.step-body p { margin: 0; font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+.step-branch {
+  display: inline-block; margin-top: 7px; font-size: 10.5px; font-weight: 500; padding: 3px 10px;
+  border-radius: 20px; background: var(--accent2-soft); color: var(--accent2);
+}
+footer { padding: 36px 0 56px; font-size: 12.5px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+::selection { background: var(--accent); color: #fff; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">OMNYSYNC</div>
+    <h1>How Procurement and Jobs work</h1>
+    <p class="lede">Two everyday processes, laid out in plain steps and simple flowcharts — how a purchase gets made, and how a job gets done, start to finish.</p>
+  </header>
+
+  <nav class="toc">
+    <a href="#p-overview" class="group-label">Procurement</a>
+    <a href="#p-overview">Overview</a>
+    <a href="#p-master">Vendors & Items</a>
+    <a href="#p-pr">Request</a>
+    <a href="#p-rfq">Quotes</a>
+    <a href="#p-po">Order</a>
+    <a href="#p-grn">Receiving</a>
+    <a href="#p-match">Paying</a>
+    <a href="#p-reports">Reports</a>
+    <div class="sep"></div>
+    <a href="#j-lifecycle" class="group-label">Jobs</a>
+    <a href="#j-lifecycle">Overview</a>
+    <a href="#j-relay">Handoffs</a>
+    <a href="#j-roles">Who Does What</a>
+    <a href="#j-money">Money</a>
+    <a href="#j-lost">Lost Items</a>
+    <a href="#j-expense">Expenses</a>
+    <a href="#j-payroll">Payday</a>
+  </nav>
+
+  <div class="part-divider">
+    <span class="part-tag">Part 1</span>
+    <h1>Procurement</h1>
+  </div>
+  <p class="part-lede">How a purchase happens — from someone raising a need, to the bill actually getting paid.</p>
+
+  <section class="module" id="p-overview">
+    <div class="module-head"><span class="module-num">Overview</span><h2>The whole journey, in one line</h2></div>
+    <p class="module-desc">Every purchase goes through the same nine stops, in the same order. Nothing skips ahead, and every handoff is recorded.</p>
+    <div class="diagram-card"><svg viewBox="0 0 1112 246" xmlns="http://www.w3.org/2000/svg" class="fc-svg" role="img" aria-label="flowchart">
+<defs>
+<marker id="arrowhead" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+<path d="M0,0 L8,4 L0,8 Z" class="fc-arrowhead"/>
+</marker>
+
+</defs>
+<g><rect x="24" y="24" width="176" height="64" rx="8" class="fc-node"/>
+<text x="112.0" y="60.0" class="fc-label" text-anchor="middle">Need</text></g>
+<path d="M200 56.0 L246 56.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="246" y="24" width="176" height="64" rx="8" class="fc-node"/>
+<text x="334.0" y="60.0" class="fc-label" text-anchor="middle">Requisition</text></g>
+<path d="M422 56.0 L468 56.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="468" y="24" width="176" height="64" rx="8" class="fc-node"/>
+<text x="556.0" y="60.0" class="fc-label" text-anchor="middle">Approval</text></g>
+<path d="M644 56.0 L690 56.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="690" y="24" width="176" height="64" rx="8" class="fc-node"/>
+<text x="778.0" y="60.0" class="fc-label" text-anchor="middle">Sourcing / RFQ</text></g>
+<path d="M866 56.0 L912 56.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="912" y="24" width="176" height="64" rx="8" class="fc-node"/>
+<text x="1000.0" y="60.0" class="fc-label" text-anchor="middle">Purchase Order</text></g>
+<path d="M1000.0 88 L1000.0 123.0 L1000.0 158" class="fc-arrow" marker-end="url(#arrowhead)" fill="none"/>
+<g><rect x="912" y="158" width="176" height="64" rx="8" class="fc-node-accent"/>
+<text x="1000.0" y="194.0" class="fc-label" text-anchor="middle">Goods Receipt</text></g>
+<path d="M912 190.0 L866 190.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="690" y="158" width="176" height="64" rx="8" class="fc-node-accent"/>
+<text x="778.0" y="194.0" class="fc-label" text-anchor="middle">Invoice Matching</text></g>
+<path d="M690 190.0 L644 190.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="468" y="158" width="176" height="64" rx="8" class="fc-node-accent"/>
+<text x="556.0" y="194.0" class="fc-label" text-anchor="middle">Payment</text></g>
+<path d="M468 190.0 L422 190.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="246" y="158" width="176" height="64" rx="8" class="fc-node-accent"/>
+<text x="334.0" y="194.0" class="fc-label" text-anchor="middle">Reports</text></g>
+</svg></div>
+  </section>
+
+  <section class="module" id="p-master">
+    <div class="module-head"><span class="module-num">Step 1</span><h2>Vendors and items on file</h2></div>
+    <p class="module-desc">Two lists everything else depends on: who you buy from, and what you buy. Get these right once, and every later step just pulls from here.</p>
+    <div class="grid-2" style="margin-bottom:24px;">
+      <div class="field-card">
+        <h3>About each vendor</h3>
+        <ul>
+          <li>Vendor code, name, address, contact person</li>
+          <li>Tax number</li>
+          <li>How and when they get paid</li>
+          <li>Currency and bank details</li>
+          <li>What kind of vendor — goods, service, etc.</li>
+          <li>Active, blocked, or blacklisted</li>
+        </ul>
+      </div>
+      <div class="field-card">
+        <h3>About each item</h3>
+        <ul>
+          <li>Item code and description</li>
+          <li>Unit of measure</li>
+          <li>Category</li>
+          <li>Standard and last-paid price</li>
+          <li>Preferred vendor(s)</li>
+          <li>When to reorder</li>
+        </ul>
+      </div>
+    </div>
+    <div class="diagram-card"><svg viewBox="0 0 544 224" xmlns="http://www.w3.org/2000/svg" class="fc-svg" role="img" aria-label="flowchart">
+<defs>
+<marker id="arrowhead" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+<path d="M0,0 L8,4 L0,8 Z" class="fc-arrowhead"/>
+</marker>
+
+</defs>
+<g><polygon points="34,20 210,20 196,90 20,90" class="fc-node-data"/>
+<text x="115.0" y="59.0" class="fc-label" text-anchor="middle">Vendor Master</text></g>
+<g><polygon points="34,130 210,130 196,200 20,200" class="fc-node-data"/>
+<text x="115.0" y="169.0" class="fc-label" text-anchor="middle">Item Master</text></g>
+<path d="M210 55.0 L280 55.0 L280 90" class="fc-arrow" marker-end="url(#arrowhead)" fill="none"/>
+<path d="M210 165.0 L280 165.0 L280 90" class="fc-arrow" marker-end="url(#arrowhead)" fill="none"/>
+<g><rect x="320" y="58" width="200" height="64" rx="8" class="fc-node-accent"/>
+<text x="420.0" y="86.5" class="fc-label" text-anchor="middle">Purchase</text>
+<text x="420.0" y="101.5" class="fc-label" text-anchor="middle">Requisition</text></g>
+<path d="M280 90 L320 90" class="fc-arrow" marker-end="url(#arrowhead)"/>
+</svg></div>
+  </section>
+
+  <section class="module" id="p-pr">
+    <div class="module-head"><span class="module-num">Step 2</span><h2>Someone asks for something</h2></div>
+    <p class="module-desc">This is where every purchase starts. Someone says what they need, and it goes for approval before anyone buys anything.</p>
+    <div class="grid-2" style="margin-bottom:24px;">
+      <div class="field-card">
+        <h3>What's on the request</h3>
+        <ul>
+          <li>Who's asking, from which department</li>
+          <li>When it's needed, how urgent it is</li>
+          <li>What item, how much, roughly what it costs</li>
+          <li>Which budget it comes out of</li>
+          <li>Any attachments — a spec sheet, a drawing</li>
+        </ul>
+      </div>
+      <div class="field-card">
+        <h3>What can happen to it</h3>
+        <div class="status-row">
+          <span class="chip">Draft</span>
+          <span class="chip">Sent for approval</span>
+          <span class="chip">Approved</span>
+          <span class="chip">Turned down</span>
+          <span class="chip">Turned into an order</span>
+        </div>
+        <p style="font-size:12.5px;color:var(--muted);margin-top:14px;line-height:1.6;">One request can turn into several orders, and several requests can be combined into one order.</p>
+      </div>
+    </div>
+    <div class="diagram-card"><svg viewBox="0 0 1096 260" xmlns="http://www.w3.org/2000/svg" class="fc-svg" role="img" aria-label="flowchart">
+<defs>
+<marker id="arrowhead" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+<path d="M0,0 L8,4 L0,8 Z" class="fc-arrowhead"/>
+</marker>
+
+</defs>
+<g><rect x="20" y="100" width="168" height="60" rx="30.0" class="fc-node-terminal"/>
+<text x="104.0" y="134.0" class="fc-label" text-anchor="middle">Draft</text></g>
+<g><rect x="248" y="100" width="168" height="60" rx="8" class="fc-node"/>
+<text x="332.0" y="134.0" class="fc-label" text-anchor="middle">Submitted</text></g>
+<path d="M188 130.0 L248 130.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><polygon points="541,80.0 616.0,130.0 541,180.0 466.0,130.0" class="fc-node-decision"/>
+<text x="541" y="126.5" class="fc-label-sm" text-anchor="middle">Approval</text>
+<text x="541" y="141.5" class="fc-label-sm" text-anchor="middle">Review</text></g>
+<path d="M416 130.0 L466 130.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="636" y="30" width="168" height="60" rx="8" class="fc-node-accent"/>
+<text x="720.0" y="64.0" class="fc-label" text-anchor="middle">Approved</text></g>
+<path d="M591 90.0 L636 60.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<text x="613.5" y="67.0" class="fc-arrow-label" text-anchor="middle">Yes</text>
+<g><rect x="864" y="30" width="188" height="60" rx="30.0" class="fc-node-success"/>
+<text x="958.0" y="64.0" class="fc-label" text-anchor="middle">Converted to PO</text></g>
+<path d="M804 60.0 L864 60.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="636" y="190" width="168" height="60" rx="30.0" class="fc-node-danger"/>
+<text x="720.0" y="224.0" class="fc-label" text-anchor="middle">Rejected</text></g>
+<path d="M591 170.0 L636 220.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<text x="613.5" y="187.0" class="fc-arrow-label" text-anchor="middle">No</text><text x="636" y="112" class="fc-note">1 PR &#8594; many POs, or many PRs &#8594; 1 PO</text>
+</svg></div>
+  </section>
+
+  <section class="module" id="p-rfq">
+    <div class="module-head"><span class="module-num">Step 3</span><h2>Getting the best price</h2></div>
+    <p class="module-desc">Optional, but worth doing for anything sizeable — get a few vendors to compete before committing to one.</p>
+    <div class="diagram-card"><svg viewBox="0 0 698 300" xmlns="http://www.w3.org/2000/svg" class="fc-svg" role="img" aria-label="flowchart">
+<defs>
+<marker id="arrowhead" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+<path d="M0,0 L8,4 L0,8 Z" class="fc-arrowhead"/>
+</marker>
+
+</defs>
+<g><rect x="20" y="20" width="190" height="70" rx="35.0" class="fc-node-terminal"/>
+<text x="115.0" y="51.5" class="fc-label" text-anchor="middle">Select items from</text>
+<text x="115.0" y="66.5" class="fc-label" text-anchor="middle">approved PR</text></g>
+<g><rect x="254" y="20" width="190" height="70" rx="8" class="fc-node"/>
+<text x="349.0" y="51.5" class="fc-label" text-anchor="middle">Select multiple</text>
+<text x="349.0" y="66.5" class="fc-label" text-anchor="middle">vendors</text></g>
+<g><rect x="488" y="20" width="190" height="70" rx="8" class="fc-node"/>
+<text x="583.0" y="51.5" class="fc-label" text-anchor="middle">Send RFQ</text>
+<text x="583.0" y="66.5" class="fc-label" text-anchor="middle"></text></g>
+<g><rect x="20" y="150" width="190" height="70" rx="8" class="fc-node"/>
+<text x="115.0" y="181.5" class="fc-label" text-anchor="middle">Vendors submit</text>
+<text x="115.0" y="196.5" class="fc-label" text-anchor="middle">quotations</text></g>
+<g><rect x="254" y="150" width="190" height="70" rx="8" class="fc-node"/>
+<text x="349.0" y="181.5" class="fc-label" text-anchor="middle">Compare</text>
+<text x="349.0" y="196.5" class="fc-label" text-anchor="middle">side-by-side</text></g>
+<g><rect x="488" y="150" width="190" height="70" rx="35.0" class="fc-node-success"/>
+<text x="583.0" y="181.5" class="fc-label" text-anchor="middle">Select winner</text>
+<text x="583.0" y="196.5" class="fc-label" text-anchor="middle">&amp;create PO</text></g>
+<path d="M210 55.0 L254 55.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<path d="M444 55.0 L488 55.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<path d="M583.0 90 L583.0 120.0 L115.0 150" class="fc-arrow" marker-end="url(#arrowhead)" fill="none"/>
+<path d="M210 185.0 L254 185.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<path d="M444 185.0 L488 185.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+</svg></div>
+    <table class="compare">
+      <tr><th>Vendor</th><th>Price</th><th>Total</th><th>Delivery</th><th>Terms</th><th>Score</th></tr>
+      <tr><td>Vendor A</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>Vendor B</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>Vendor C</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+    </table>
+  </section>
+
+  <section class="module" id="p-po">
+    <div class="module-head"><span class="module-num">Step 4</span><h2>Placing the order</h2></div>
+    <p class="module-desc">The official commitment to a vendor. Created straight from the approved request, and tracked all the way to done.</p>
+    <div class="status-row" style="margin-bottom:22px;">
+      <span class="chip">One-off order</span>
+      <span class="chip">Standing agreement — for repeat buys</span>
+      <span class="chip">Order for a service</span>
+    </div>
+    <div class="diagram-card"><svg viewBox="0 0 1304 274" xmlns="http://www.w3.org/2000/svg" class="fc-svg" role="img" aria-label="flowchart">
+<defs>
+<marker id="arrowhead" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+<path d="M0,0 L8,4 L0,8 Z" class="fc-arrowhead"/>
+</marker>
+
+</defs>
+<g><rect x="20" y="40" width="168" height="60" rx="30.0" class="fc-node-terminal"/>
+<text x="104.0" y="74.0" class="fc-label" text-anchor="middle">Draft</text></g>
+<g><rect x="230" y="40" width="168" height="60" rx="8" class="fc-node"/>
+<text x="314.0" y="74.0" class="fc-label" text-anchor="middle">Approved</text></g>
+<path d="M188 70.0 L230 70.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="440" y="40" width="168" height="60" rx="8" class="fc-node"/>
+<text x="524.0" y="74.0" class="fc-label" text-anchor="middle">Sent to Vendor</text></g>
+<path d="M398 70.0 L440 70.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="650" y="40" width="168" height="60" rx="8" class="fc-node"/>
+<text x="734.0" y="74.0" class="fc-label" text-anchor="middle">Partially Received</text></g>
+<path d="M608 70.0 L650 70.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="860" y="40" width="168" height="60" rx="8" class="fc-node"/>
+<text x="944.0" y="74.0" class="fc-label" text-anchor="middle">Fully Received</text></g>
+<path d="M818 70.0 L860 70.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="1070" y="40" width="168" height="60" rx="30.0" class="fc-node-success"/>
+<text x="1154.0" y="74.0" class="fc-label" text-anchor="middle">Closed</text></g>
+<path d="M1028 70.0 L1070 70.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="440" y="190" width="168" height="60" rx="30.0" class="fc-node-danger"/>
+<text x="524.0" y="224.0" class="fc-label" text-anchor="middle">Cancelled</text></g>
+<path d="M314.0 100 L314.0 160 L524.0 190" class="fc-arrow" marker-end="url(#arrowhead)" fill="none" stroke-dasharray="6 5"/>
+<path d="M524.0 100 L524.0 160 L524.0 190" class="fc-arrow" marker-end="url(#arrowhead)" fill="none" stroke-dasharray="6 5"/>
+<path d="M734.0 100 L734.0 160 L524.0 190" class="fc-arrow" marker-end="url(#arrowhead)" fill="none" stroke-dasharray="6 5"/>
+</svg></div>
+    <div class="grid-2">
+      <div class="field-card">
+        <h3>Top of the order</h3>
+        <ul><li>Order number, vendor, dates</li><li>Payment terms, currency, where it ships</li></ul>
+      </div>
+      <div class="field-card">
+        <h3>Line by line</h3>
+        <ul><li>Item, quantity, price, discount, tax</li><li>Delivery dates, which request it's from</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="module" id="p-grn">
+    <div class="module-head"><span class="module-num">Step 5</span><h2>Checking what arrives</h2></div>
+    <p class="module-desc">What actually showed up, checked against what was ordered. Partial deliveries are normal — what matters is what happens next based on quality.</p>
+    <div class="diagram-card"><svg viewBox="0 0 1340 350" xmlns="http://www.w3.org/2000/svg" class="fc-svg" role="img" aria-label="flowchart">
+<defs>
+<marker id="arrowhead" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+<path d="M0,0 L8,4 L0,8 Z" class="fc-arrowhead"/>
+</marker>
+
+</defs>
+<g><rect x="20" y="110" width="172" height="60" rx="30.0" class="fc-node-terminal"/>
+<text x="106.0" y="144.0" class="fc-label" text-anchor="middle">Select PO</text></g>
+<g><rect x="252" y="110" width="172" height="60" rx="8" class="fc-node"/>
+<text x="338.0" y="144.0" class="fc-label" text-anchor="middle">Enter Received Qty</text></g>
+<path d="M192 140.0 L252 140.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><polygon points="564,65.0 644.0,140.0 564,215.0 484.0,140.0" class="fc-node-decision"/>
+<text x="564" y="144.0" class="fc-label-sm" text-anchor="middle">Quality Status</text></g>
+<path d="M424 140.0 L484 140.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="674" y="10" width="172" height="60" rx="8" class="fc-node-success"/>
+<text x="760.0" y="44.0" class="fc-label" text-anchor="middle">Accepted</text></g>
+<path d="M619 85.0 L674 40.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<text x="646.5" y="54.5" class="fc-arrow-label" text-anchor="middle">Accepted</text>
+<g><rect x="896" y="10" width="190" height="60" rx="8" class="fc-node-accent"/>
+<text x="991.0" y="36.5" class="fc-label" text-anchor="middle">Inventory +,</text>
+<text x="991.0" y="51.5" class="fc-label" text-anchor="middle">GR/IR credited</text></g>
+<path d="M846 40.0 L896 40.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="1136" y="10" width="180" height="60" rx="30.0" class="fc-node-success"/>
+<text x="1226.0" y="36.5" class="fc-label" text-anchor="middle">PO status</text>
+<text x="1226.0" y="51.5" class="fc-label" text-anchor="middle">auto-updates</text></g>
+<path d="M1086 40.0 L1136 40.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="674" y="110" width="172" height="60" rx="8" class="fc-node-warning"/>
+<text x="760.0" y="144.0" class="fc-label" text-anchor="middle">Hold</text></g>
+<path d="M644 140.0 L674 140.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<text x="659.0" y="132.0" class="fc-arrow-label" text-anchor="middle">Hold</text>
+<g><rect x="896" y="110" width="190" height="60" rx="30.0" class="fc-node-warning"/>
+<text x="991.0" y="136.5" class="fc-label" text-anchor="middle">Pending review</text>
+<text x="991.0" y="151.5" class="fc-label" text-anchor="middle">queue</text></g>
+<path d="M846 140.0 L896 140.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="674" y="260" width="172" height="60" rx="8" class="fc-node-danger"/>
+<text x="760.0" y="294.0" class="fc-label" text-anchor="middle">Rejected</text></g>
+<path d="M619 195.0 L674 290.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<text x="646.5" y="234.5" class="fc-arrow-label" text-anchor="middle">Rejected</text>
+<g><rect x="896" y="260" width="190" height="60" rx="30.0" class="fc-node-danger"/>
+<text x="991.0" y="286.5" class="fc-label" text-anchor="middle">Returned to</text>
+<text x="991.0" y="301.5" class="fc-label" text-anchor="middle">vendor</text></g>
+<path d="M846 290.0 L896 290.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+</svg></div>
+  </section>
+
+  <section class="module" id="p-match">
+    <div class="module-head"><span class="module-num">Step 6</span><h2>Paying the bill — the 3-way check</h2></div>
+    <p class="module-desc">The most important safeguard in the whole process. The bill only gets paid once the order, the delivery, and the invoice all agree with each other.</p>
+    <div class="diagram-card"><svg viewBox="0 0 979 300" xmlns="http://www.w3.org/2000/svg" class="fc-svg" role="img" aria-label="flowchart">
+<defs>
+<marker id="arrowhead" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+<path d="M0,0 L8,4 L0,8 Z" class="fc-arrowhead"/>
+</marker>
+
+</defs>
+<g><polygon points="34,20 220,20 206,80 20,80" class="fc-node-data"/>
+<text x="120.0" y="46.5" class="fc-label" text-anchor="middle">Purchase Order</text>
+<text x="120.0" y="61.5" class="fc-label" text-anchor="middle">(ordered + price)</text></g>
+<g><polygon points="34,110 220,110 206,170 20,170" class="fc-node-data"/>
+<text x="120.0" y="129.0" class="fc-label" text-anchor="middle">Goods Receipt</text>
+<text x="120.0" y="144.0" class="fc-label" text-anchor="middle">(actually</text>
+<text x="120.0" y="159.0" class="fc-label" text-anchor="middle">received)</text></g>
+<g><polygon points="34,200 220,200 206,260 20,260" class="fc-node-data"/>
+<text x="120.0" y="226.5" class="fc-label" text-anchor="middle">Supplier Invoice</text>
+<text x="120.0" y="241.5" class="fc-label" text-anchor="middle">(amount charged)</text></g>
+<path d="M220 50.0 L320 50.0 L285 140.0" class="fc-arrow" marker-end="url(#arrowhead)" fill="none"/>
+<path d="M220 140.0 L320 140.0 L285 140.0" class="fc-arrow" marker-end="url(#arrowhead)" fill="none"/>
+<path d="M220 230.0 L320 230.0 L285 140.0" class="fc-arrow" marker-end="url(#arrowhead)" fill="none"/>
+<g><polygon points="375,55.0 460.0,140.0 375,225.0 290.0,140.0" class="fc-node-decision"/>
+<text x="375" y="136.5" class="fc-label-sm" text-anchor="middle">3-Way Match</text>
+<text x="375" y="151.5" class="fc-label-sm" text-anchor="middle">Engine</text></g>
+<g><rect x="495" y="20" width="190" height="60" rx="8" class="fc-node-success"/>
+<text x="590.0" y="54.0" class="fc-label" text-anchor="middle">Matched</text></g>
+<path d="M445 80.0 L495 50.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<text x="470.0" y="57.0" class="fc-arrow-label" text-anchor="middle">Match</text>
+<g><rect x="735" y="20" width="220" height="60" rx="30.0" class="fc-node-success"/>
+<text x="845.0" y="46.5" class="fc-label" text-anchor="middle">Approved for</text>
+<text x="845.0" y="61.5" class="fc-label" text-anchor="middle">Payment</text></g>
+<path d="M685 50.0 L735 50.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="495" y="200" width="190" height="60" rx="8" class="fc-node-danger"/>
+<text x="590.0" y="234.0" class="fc-label" text-anchor="middle">Discrepancy</text></g>
+<path d="M445 200.0 L495 230.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<text x="470.0" y="207.0" class="fc-arrow-label" text-anchor="middle">Mismatch</text>
+<g><rect x="735" y="200" width="220" height="60" rx="30.0" class="fc-node-danger"/>
+<text x="845.0" y="226.5" class="fc-label" text-anchor="middle">Payment blocked</text>
+<text x="845.0" y="241.5" class="fc-label" text-anchor="middle">/ review</text></g>
+<path d="M685 230.0 L735 230.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+</svg></div>
+    <div class="status-row">
+      <span class="chip">Waiting to match</span>
+      <span class="chip">Matched</span>
+      <span class="chip">Doesn't match</span>
+      <span class="chip">Cleared to pay</span>
+    </div>
+  </section>
+
+  <section class="module" id="p-reports">
+    <div class="module-head"><span class="module-num">Step 7</span><h2>Staying on top of it</h2></div>
+    <p class="module-desc">Once this is running, these are the views worth checking regularly.</p>
+    <div class="report-grid">
+      <div class="report-card"><span class="rlabel">Waiting</span>Requests still needing approval</div>
+      <div class="report-card"><span class="rlabel">Waiting</span>Orders still open</div>
+      <div class="report-card"><span class="rlabel">Watch</span>Deliveries running late</div>
+      <div class="report-card"><span class="rlabel">Watch</span>Delivered but not yet billed</div>
+      <div class="report-card"><span class="rlabel">Spend</span>Who you're spending with</div>
+      <div class="report-card"><span class="rlabel">Spend</span>Where prices are creeping up</div>
+      <div class="report-card"><span class="rlabel">Speed</span>How long a purchase takes end to end</div>
+    </div>
+  </section>
+
+  <div class="part-divider">
+    <span class="part-tag">Part 2</span>
+    <h1>Jobs</h1>
+  </div>
+  <p class="part-lede">How a job moves from the first phone call to a closed, verified record — and the small steps each person takes along the way.</p>
+
+  <section class="module" id="j-lifecycle">
+    <div class="module-head"><span class="module-num">Overview</span><h2>A job's life, start to finish</h2></div>
+    <p class="module-desc">A job runs from Created to Verified in one line. If the work can't finish the same day, it pauses — and only picks back up once the technician's expenses for the day are settled.</p>
+    <div class="diagram-card"><svg viewBox="0 0 1810 291" xmlns="http://www.w3.org/2000/svg" class="fc-svg" role="img" aria-label="flowchart">
+<defs>
+<marker id="arrowhead" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+<path d="M0,0 L8,4 L0,8 Z" class="fc-arrowhead"/>
+</marker>
+
+</defs>
+<g><rect x="20" y="40" width="168" height="58" rx="29.0" class="fc-node-terminal"/>
+<text x="104.0" y="73.0" class="fc-label" text-anchor="middle">Created</text></g>
+<g><rect x="236" y="40" width="168" height="58" rx="8" class="fc-node"/>
+<text x="320.0" y="73.0" class="fc-label" text-anchor="middle">Assigned</text></g>
+<path d="M188 69.0 L236 69.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="452" y="40" width="168" height="58" rx="8" class="fc-node"/>
+<text x="536.0" y="73.0" class="fc-label" text-anchor="middle">In Progress</text></g>
+<path d="M404 69.0 L452 69.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><polygon points="732,19.0 797.0,69.0 732,119.0 667.0,69.0" class="fc-node-decision"/>
+<text x="732" y="65.5" class="fc-label-sm" text-anchor="middle">Finished</text>
+<text x="732" y="80.5" class="fc-label-sm" text-anchor="middle">today?</text></g>
+<path d="M620 69.0 L667 69.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="814" y="40" width="168" height="58" rx="8" class="fc-node-accent"/>
+<text x="898.0" y="73.0" class="fc-label" text-anchor="middle">Completed</text></g>
+<path d="M797 69.0 L814 69.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<text x="805.5" y="61.0" class="fc-arrow-label" text-anchor="middle">Yes</text>
+<g><rect x="648" y="193" width="168" height="58" rx="8" class="fc-node-warning"/>
+<text x="732.0" y="226.0" class="fc-label" text-anchor="middle">Paused</text></g>
+<path d="M732 119.0 L732.0 193" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<text x="732.0" y="148.0" class="fc-arrow-label" text-anchor="middle">No</text>
+<g><rect x="864" y="193" width="180" height="58" rx="8" class="fc-node-warning"/>
+<text x="954.0" y="218.5" class="fc-label" text-anchor="middle">Gate: expenses</text>
+<text x="954.0" y="233.5" class="fc-label" text-anchor="middle">cleared</text></g>
+<path d="M816 222.0 L864 222.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="1092" y="193" width="140" height="58" rx="8" class="fc-node-warning"/>
+<text x="1162.0" y="226.0" class="fc-label" text-anchor="middle">Resume</text></g>
+<path d="M1044 222.0 L1092 222.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<path d="M1162 193 L1162 158 L898.0 98" class="fc-arrow" marker-end="url(#arrowhead)" fill="none"/>
+<g><rect x="1030" y="40" width="168" height="58" rx="8" class="fc-node-accent"/>
+<text x="1114.0" y="67.0" class="fc-label" text-anchor="middle">Finalized</text>
+<text x="1114.0" y="85.0" class="fc-sublabel" text-anchor="middle">accountant settles</text></g>
+<path d="M982 69.0 L1030 69.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="1246" y="40" width="168" height="58" rx="8" class="fc-node-accent"/>
+<text x="1330.0" y="67.0" class="fc-label" text-anchor="middle">Call Center</text>
+<text x="1330.0" y="85.0" class="fc-sublabel" text-anchor="middle">customer feedback</text></g>
+<path d="M1198 69.0 L1246 69.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><polygon points="1526,14.0 1596.0,69.0 1526,124.0 1456.0,69.0" class="fc-node-decision"/>
+<text x="1526" y="73.0" class="fc-label-sm" text-anchor="middle">Outcome</text></g>
+<path d="M1414 69.0 L1456 69.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="1616" y="40" width="170" height="58" rx="29.0" class="fc-node-success"/>
+<text x="1701.0" y="65.5" class="fc-label" text-anchor="middle">Verified —</text>
+<text x="1701.0" y="80.5" class="fc-label" text-anchor="middle">closed</text></g>
+<path d="M1596 39.0 L1616 55.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<text x="1606.0" y="39.0" class="fc-arrow-label" text-anchor="middle">Happy</text>
+<path d="M1581 109.0 L1581 159.0 L1701 98 L1701 98" class="fc-arrow" marker-end="url(#arrowhead)" fill="none"/>
+<text x="1701" y="90" class="fc-arrow-label" text-anchor="middle">Unhappy — flags Admin</text>
+</svg></div>
+  </section>
+
+  <section class="module" id="j-relay">
+    <div class="module-head"><span class="module-num">Step 1</span><h2>Who touches the job, and when</h2></div>
+    <p class="module-desc">Dispatcher opens it, the technician does the work, the accountant settles the cash, the call center checks in with the customer, and the admin gives the final okay.</p>
+    <div class="diagram-card"><svg viewBox="0 0 1166 110" xmlns="http://www.w3.org/2000/svg" class="fc-svg" role="img" aria-label="flowchart">
+<defs>
+<marker id="arrowhead" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+<path d="M0,0 L8,4 L0,8 Z" class="fc-arrowhead"/>
+</marker>
+
+</defs>
+<g><rect x="20" y="20" width="190" height="70" rx="8" class="fc-node-terminal"/>
+<text x="115.0" y="53.0" class="fc-label" text-anchor="middle">Dispatcher</text>
+<text x="115.0" y="71.0" class="fc-sublabel" text-anchor="middle">takes the call, opens ticket</text></g>
+<g><rect x="254" y="20" width="190" height="70" rx="8" class="fc-node-accent"/>
+<text x="349.0" y="53.0" class="fc-label" text-anchor="middle">Technician</text>
+<text x="349.0" y="71.0" class="fc-sublabel" text-anchor="middle">does the work on site</text></g>
+<path d="M210 55.0 L254 55.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="488" y="20" width="190" height="70" rx="8" class="fc-node-accent"/>
+<text x="583.0" y="53.0" class="fc-label" text-anchor="middle">Accountant</text>
+<text x="583.0" y="71.0" class="fc-sublabel" text-anchor="middle">settles the day's cash</text></g>
+<path d="M444 55.0 L488 55.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="722" y="20" width="190" height="70" rx="8" class="fc-node-accent"/>
+<text x="817.0" y="53.0" class="fc-label" text-anchor="middle">Call Center</text>
+<text x="817.0" y="71.0" class="fc-sublabel" text-anchor="middle">gets customer feedback</text></g>
+<path d="M678 55.0 L722 55.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="956" y="20" width="190" height="70" rx="8" class="fc-node-success"/>
+<text x="1051.0" y="53.0" class="fc-label" text-anchor="middle">Admin / Boss</text>
+<text x="1051.0" y="71.0" class="fc-sublabel" text-anchor="middle">verifies &amp; closes</text></g>
+<path d="M912 55.0 L956 55.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+</svg></div>
+  </section>
+
+  <section class="module" id="j-roles">
+    <div class="module-head"><span class="module-num">Step 2</span><h2>What each person actually does</h2></div>
+    <p class="module-desc">The small steps behind each handoff above — what shows up on their screen, and what happens automatically behind it.</p>
+    <div class="role-grid">
+      
+    <div class="role-card">
+      <div class="role-head">
+        <span class="role-num">1</span>
+        <div>
+          <h3>Dispatcher</h3>
+          <p class="role-tagline">Takes the call and opens the job</p>
+        </div>
+      </div>
+      <div class="stepper">
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body"><h4>Find the customer</h4><p>Search by phone number or name — existing customers fill in instantly.</p></div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body"><h4>Add if new</h4><p>New customers get pinned on a map so their address is on file.</p></div>
+</div>
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body"><h4>Job ticket created</h4><p>The system gives it a unique tracking number automatically.</p></div>
+</div>
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-body"><h4>List what's needed</h4><p>Picks the work required, with standard prices and rough quantities.</p></div>
+</div>
+<div class="step">
+  <div class="step-num">5</div>
+  <div class="step-body"><h4>Pick a technician</h4><p>From a list, or a live map of who's closest to the customer.</p></div>
+</div>
+<div class="step">
+  <div class="step-num">6</div>
+  <div class="step-body"><h4>Alert sent</h4><p>A WhatsApp message and an app alert go out the moment it's saved.</p><span class="step-branch">automatic</span></div>
+</div>
+</div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-head">
+        <span class="role-num">2</span>
+        <div>
+          <h3>Technician</h3>
+          <p class="role-tagline">Does the work, from their phone</p>
+        </div>
+      </div>
+      <div class="stepper">
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body"><h4>See the new job</h4><p>Opens the alert — customer, address, phone number, what's needed.</p></div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body"><h4>Accept & start</h4><p>Tapping Start logs the time and location they arrived.</p></div>
+</div>
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body"><h4>Request more parts</h4><p>If needed mid-job — the store keeper sees it right away.</p><span class="step-branch">goes to Store Keeper</span></div>
+</div>
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-body"><h4>Ask for a discount</h4><p>If the customer wants one on site — needs office approval first.</p><span class="step-branch">goes to Accountant</span></div>
+</div>
+<div class="step">
+  <div class="step-num">5</div>
+  <div class="step-body"><h4>Report damage or loss</h4><p>Lets both the store and accountant know immediately.</p><span class="step-branch">goes to Store + Accountant</span></div>
+</div>
+<div class="step">
+  <div class="step-num">6</div>
+  <div class="step-body"><h4>Stop for the night</h4><p>Locked until their expenses for the day are cleared with the accountant.</p><span class="step-branch">pause gate</span></div>
+</div>
+<div class="step">
+  <div class="step-num">7</div>
+  <div class="step-body"><h4>Log personal spending</h4><p>Amount, a short note, and a photo of the receipt.</p></div>
+</div>
+<div class="step">
+  <div class="step-num">8</div>
+  <div class="step-body"><h4>Finish the job</h4><p>Enters the real amount of parts and labor actually used.</p></div>
+</div>
+</div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-head">
+        <span class="role-num">3</span>
+        <div>
+          <h3>Accountant</h3>
+          <p class="role-tagline">Settles the day's cash</p>
+        </div>
+      </div>
+      <div class="stepper">
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body"><h4>Open the daily list</h4><p>Every paused or finished job waiting to be settled.</p></div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body"><h4>Approve discounts</h4><p>One click — the customer's bill updates right away.</p></div>
+</div>
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body"><h4>See the total owed</h4><p>Calculated automatically from what was actually used.</p></div>
+</div>
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-body"><h4>Record cash received</h4><p>Any shortfall is saved with a reminder to collect it later.</p></div>
+</div>
+<div class="step">
+  <div class="step-num">5</div>
+  <div class="step-body"><h4>Clear expenses</h4><p>Doing this is what lets a paused technician resume the next day.</p><span class="step-branch">pause gate</span></div>
+</div>
+<div class="step">
+  <div class="step-num">6</div>
+  <div class="step-body"><h4>Check lost items</h4><p>Any losses get charged to the technician's account.</p></div>
+</div>
+<div class="step">
+  <div class="step-num">7</div>
+  <div class="step-body"><h4>Lock it in</h4><p>Numbers are frozen. Sent on to Call Center for feedback.</p></div>
+</div>
+</div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-head">
+        <span class="role-num">4</span>
+        <div>
+          <h3>Call Center</h3>
+          <p class="role-tagline">Checks in with the customer</p>
+        </div>
+      </div>
+      <div class="stepper">
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body"><h4>Job lands in queue</h4><p>Appears the moment the accountant locks the job in.</p><span class="step-branch">automatic</span></div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body"><h4>Call and log the answer</h4><p>Happy, Unhappy, No Answer, or Call Back Later.</p></div>
+</div>
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body"><h4>Unhappy? Note why</h4><p>Sends an urgent alert straight to the Admin.</p><span class="step-branch">goes to Admin</span></div>
+</div>
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-body"><h4>No answer? Try later</h4><p>The system brings it back up later that day.</p></div>
+</div>
+<div class="step">
+  <div class="step-num">5</div>
+  <div class="step-body"><h4>Feeds ratings</h4><p>Rolls into the technician's monthly score.</p></div>
+</div>
+</div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-head">
+        <span class="role-num">5</span>
+        <div>
+          <h3>Admin / Boss</h3>
+          <p class="role-tagline">Gives the final okay</p>
+        </div>
+      </div>
+      <div class="stepper">
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body"><h4>Review what's waiting</h4><p>Every job with feedback logged, ready for sign-off.</p></div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body"><h4>Flagged jobs first</h4><p>Unhappy-customer jobs rise to the top of the list.</p></div>
+</div>
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body"><h4>Check the full story</h4><p>Where the technician went, how long it took, what happened.</p></div>
+</div>
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-body"><h4>Verify & close</h4><p>Locked for good — books and stock are saved permanently.</p></div>
+</div>
+<div class="step">
+  <div class="step-num">5</div>
+  <div class="step-body"><h4>See the live map</h4><p>Where every technician is right now.</p></div>
+</div>
+<div class="step">
+  <div class="step-num">6</div>
+  <div class="step-body"><h4>Check the dashboards</h4><p>Completed jobs, money owed, revenue, top performers.</p></div>
+</div>
+</div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-head">
+        <span class="role-num">6</span>
+        <div>
+          <h3>Store Keeper</h3>
+          <p class="role-tagline">Hands out and tracks materials</p>
+        </div>
+      </div>
+      <div class="stepper">
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body"><h4>Hand out parts</h4><p>Fulfills what technicians request from the shelves.</p></div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body"><h4>Log any returns</h4><p>Whenever a technician does bring parts back.</p></div>
+</div>
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body"><h4>Confirm what's missing</h4><p>Verifies a lost or broken item so it can be charged.</p></div>
+</div>
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-body"><h4>Keep the catalog current</h4><p>New items, low-stock alerts, up-to-date prices.</p></div>
+</div>
+<div class="step">
+  <div class="step-num">5</div>
+  <div class="step-body"><h4>Reorder when low</h4><p>Raises a purchase request once shelves hit the minimum.</p></div>
+</div>
+</div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-head">
+        
+
+    <div class="role-card">
+      <div class="role-head">
+        <span class="role-num">7</span>
+        <div>
+          
+ 
+  <section class="module" id="j-lost">
+    <div class="module-head"><span class="module-num">Step 4</span><h2>If something's broken or missing</h2></div>
+    <p class="module-desc">A simple 3-step chain, so nothing disappears without someone accountable for it.</p>
+    <div class="diagram-card"><svg viewBox="0 0 751 110" xmlns="http://www.w3.org/2000/svg" class="fc-svg" role="img" aria-label="flowchart">
+<defs>
+<marker id="arrowhead" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+<path d="M0,0 L8,4 L0,8 Z" class="fc-arrowhead"/>
+</marker>
+
+</defs>
+<g><rect x="20" y="20" width="205" height="70" rx="8" class="fc-node-terminal"/>
+<text x="122.5" y="53.0" class="fc-label" text-anchor="middle">Technician</text>
+<text x="122.5" y="71.0" class="fc-sublabel" text-anchor="middle">reports item broken / missing</text></g>
+<g><rect x="273" y="20" width="205" height="70" rx="8" class="fc-node-warning"/>
+<text x="375.5" y="53.0" class="fc-label" text-anchor="middle">Store Keeper</text>
+<text x="375.5" y="71.0" class="fc-sublabel" text-anchor="middle">confirms stock is gone</text></g>
+<path d="M225 55.0 L273 55.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="526" y="20" width="205" height="70" rx="8" class="fc-node-danger"/>
+<text x="628.5" y="53.0" class="fc-label" text-anchor="middle">Accountant</text>
+<text x="628.5" y="71.0" class="fc-sublabel" text-anchor="middle">charges technician's ledger</text></g>
+<path d="M478 55.0 L526 55.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+</svg></div>
+  </section>
+
+  <section class="module" id="j-expense">
+    <div class="module-head"><span class="module-num">Step 5</span><h2>Paying technicians back</h2></div>
+    <p class="module-desc">Technicians sometimes spend their own money on small site purchases. How fast they're paid back depends on what's in the till that day — but the money is never forgotten.</p>
+    <div class="diagram-card"><svg viewBox="0 0 920 316" xmlns="http://www.w3.org/2000/svg" class="fc-svg" role="img" aria-label="flowchart">
+<defs>
+<marker id="arrowhead" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+<path d="M0,0 L8,4 L0,8 Z" class="fc-arrowhead"/>
+</marker>
+
+</defs>
+<g><rect x="20" y="100" width="185" height="58" rx="29.0" class="fc-node-terminal"/>
+<text x="112.5" y="125.5" class="fc-label" text-anchor="middle">Receipt</text>
+<text x="112.5" y="140.5" class="fc-label" text-anchor="middle">uploaded</text></g>
+<path d="M205 129.0 L268 129.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><polygon points="348,54.0 428.0,129.0 348,204.0 268.0,129.0" class="fc-node-decision"/>
+<text x="348" y="125.5" class="fc-label-sm" text-anchor="middle">Office cash</text>
+<text x="348" y="140.5" class="fc-label-sm" text-anchor="middle">available?</text></g>
+<g><rect x="460" y="10" width="185" height="58" rx="8" class="fc-node-success"/>
+<text x="552.5" y="43.0" class="fc-label" text-anchor="middle">Full cash</text></g>
+<path d="M428 77.0 L460 39.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<text x="444.0" y="50.0" class="fc-arrow-label" text-anchor="middle">Full</text>
+<g><rect x="681" y="10" width="215" height="58" rx="29.0" class="fc-node-success"/>
+<text x="788.5" y="35.5" class="fc-label" text-anchor="middle">Reimbursed 100%</text>
+<text x="788.5" y="50.5" class="fc-label" text-anchor="middle">on the spot</text></g>
+<path d="M645 39.0 L681 39.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="460" y="100" width="185" height="58" rx="8" class="fc-node-warning"/>
+<text x="552.5" y="133.0" class="fc-label" text-anchor="middle">Some cash</text></g>
+<path d="M428 129.0 L460 129.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<text x="444.0" y="121.0" class="fc-arrow-label" text-anchor="middle">Some</text>
+<g><rect x="681" y="100" width="215" height="58" rx="29.0" class="fc-node-warning"/>
+<text x="788.5" y="118.0" class="fc-label" text-anchor="middle">Paid partial,</text>
+<text x="788.5" y="133.0" class="fc-label" text-anchor="middle">rest carried</text>
+<text x="788.5" y="148.0" class="fc-label" text-anchor="middle">forward</text></g>
+<path d="M645 129.0 L681 129.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<g><rect x="460" y="238" width="185" height="58" rx="8" class="fc-node-danger"/>
+<text x="552.5" y="271.0" class="fc-label" text-anchor="middle">No cash</text></g>
+<path d="M428 181.0 L460 267.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+<text x="444.0" y="216.0" class="fc-arrow-label" text-anchor="middle">None</text>
+<g><rect x="681" y="238" width="215" height="58" rx="29.0" class="fc-node-danger"/>
+<text x="788.5" y="263.5" class="fc-label" text-anchor="middle">Recorded as</text>
+<text x="788.5" y="278.5" class="fc-label" text-anchor="middle">company debt</text></g>
+<path d="M645 267.0 L681 267.0" class="fc-arrow" marker-end="url(#arrowhead)"/>
+</svg></div>
+  </section>
+
+    <footer>
+    <span>OMNYSYNC — Procurement & Jobs, how it all works</span>
+  </footer>
+</div>
+</body>
+</html>
